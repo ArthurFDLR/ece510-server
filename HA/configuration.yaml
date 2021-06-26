@@ -1,0 +1,55 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+panel_custom:
+  - name: pose-estimation-panel
+    # url_path needs to be unique for each panel_custom config
+    url_path: redirect-server-controls
+    sidebar_title: Pose Estimation Panel
+    sidebar_icon: mdi:server
+    module_url: /local/pose-estimation-panel.js
+    config:
+      # Data you want to make available to panel
+      hello: world
+
+# Add the light MQTT device
+light:
+  - platform: mqtt
+    # The topic that will be used to command the device
+    command_topic: "devices/lightM5"
+
+# Add the Jetson Nano
+sensor:
+  - platform: mqtt
+    # The topic that will receive the poses that 
+    # the jetson have recognized
+    state_topic: "devices/JetsonNano/poses"
+
+
+# This is the configuration of the UI
+lovelace:
+  # The UI is configured using this file
+  # not the web tool
+  mode: yaml
+
+#
+# Add-On for lovelace
+#
+  resources:
+    # Adds the custom panel we created to home assistant
+    - url: /local/pose-estimation-panel.js
+      type: module
+
+# Launch the MQTT broker on the server
+mqtt:
+  broker: 127.0.0.1
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
