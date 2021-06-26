@@ -17,18 +17,66 @@ panel_custom:
       # Data you want to make available to panel
       hello: world
 
-# Add the light MQTT device
+# Add the relay MQTT device
 light:
   - platform: mqtt
     # The topic that will be used to command the device
-    command_topic: "devices/lightM5"
+    name: "Light controlled with relay"
+    state_topic: "devices/M5-relay-light/status"
+    command_topic: "devices/M5-relay-light/switch"
+    qos: 0
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+
+# Add the rgb MQTT ligh
+# Kson format
+# {
+#   "brightness": 255,
+#   "color_mode": "rgb",
+#   "color_temp": 155,
+#   "color": {
+#     "r": 255,
+#     "g": 180,
+#     "b": 200,
+#     "c": 100,
+#     "w": 50,
+#     "x": 0.406,
+#     "y": 0.301,
+#     "h": 344.0,
+#     "s": 29.412
+#   },
+#   "effect": "colorloop",
+#   "state": "ON",
+#   "transition": 2,
+#   "white_value": 150
+# }
+
+light:
+  - platform: mqtt
+    # The topic that will be used to command the device
+    schema: json
+    name: rgb_light
+    state_topic: "devices/M5-rgb-light"
+    command_topic: "devices/M5-rgb-light/set"
+    brightness: true
+    color_mode: true
+    supported_color_modes: ["rgb"]
 
 # Add the Jetson Nano
+# TODO: Define data format
 sensor:
   - platform: mqtt
     # The topic that will receive the poses that 
     # the jetson have recognized
+    name: "JetsonNano"
     state_topic: "devices/JetsonNano/poses"
+    value_template: "{{ value_json.PoseLabel }}"
+    availability:
+      - topic: "devices/JetsonNano/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+    
 
 
 # This is the configuration of the UI
