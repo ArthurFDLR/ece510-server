@@ -74,18 +74,20 @@ sensor:
       - topic: "devices/pose-estimation/jetson-nano-1/status"
     payload_available: "online"
     payload_not_available: "offline"
+    json_attributes_topic: "devices/pose-estimation/jetson-nano-1/postures-info"
+    json_attributes_template: "{{ value_json.Attributes | tojson }}"
     
 automation:
 - id: one
   alias: "Toggle on light when the jetson Nano detects a raise of hand"
   trigger:
     - platform: state
-      entity_id: jetson_nano
+      entity_id: sensor.posture_estimation
       to: "RaisedHand"
   action:
     - service: light.toggle
       target:
-        entity_id: light
+        entity_id: light.relay_device
       
 
 # This is the configuration of the UI
