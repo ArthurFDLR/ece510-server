@@ -9,7 +9,7 @@ tts:
 panel_custom:
   - name: pose-estimation-panel
     # url_path needs to be unique for each panel_custom config
-    url_path: redirect-server-controls
+    url_path: pose_estimation_panel
     sidebar_title: Pose Estimation Panel
     sidebar_icon: mdi:server
     module_url: /local/pose-estimation-panel.js
@@ -21,16 +21,15 @@ panel_custom:
 light:
   - platform: mqtt
     # The topic that will be used to command the device
-    name: "Light controlled with relay"
+    name: "Relay device"
     state_topic: "devices/M5-relay-light/status"
     command_topic: "devices/M5-relay-light/switch"
     qos: 0
     payload_on: "ON"
     payload_off: "OFF"
     optimistic: false
-
-# Add the rgb MQTT ligh
-# Kson format
+# Add the rgb MQTT light
+# Json format
 # {
 #   "brightness": 255,
 #   "color_mode": "rgb",
@@ -51,17 +50,16 @@ light:
 #   "transition": 2,
 #   "white_value": 150
 # }
-
-light:
   - platform: mqtt
     # The topic that will be used to command the device
     schema: json
-    name: rgb_light
+    name: "rgb_light"
     state_topic: "devices/M5-rgb-light"
     command_topic: "devices/M5-rgb-light/set"
     brightness: true
     color_mode: true
     supported_color_modes: ["rgb"]
+
 
 # Add the Jetson Nano
 # TODO: Define data format
@@ -69,15 +67,26 @@ sensor:
   - platform: mqtt
     # The topic that will receive the poses that 
     # the jetson have recognized
-    name: "JetsonNano"
-    state_topic: "devices/JetsonNano/poses"
+    name: "Posture estimation"
+    state_topic: "devices/pose-estimation/jetson-nano-1/postures-info"
     value_template: "{{ value_json.PoseLabel }}"
     availability:
-      - topic: "devices/JetsonNano/status"
+      - topic: "devices/pose-estimation/jetson-nano-1/status"
     payload_available: "online"
     payload_not_available: "offline"
     
-
+automation:
+- id: one
+  alias: "Toggle on light when the jetson Nano detects a raise of hand"
+  trigger:
+    - platform: state
+      entity_id: jetson_nano
+      to: "RaisedHand"
+  action:
+    - service: light.toggle
+      target:
+        entity_id: light
+      
 
 # This is the configuration of the UI
 lovelace:
