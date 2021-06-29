@@ -9,13 +9,10 @@ tts:
 panel_custom:
   - name: pose-estimation-panel
     # url_path needs to be unique for each panel_custom config
-    url_path: pose_estimation_panel
+    url_path: pose-estimation-panel
     sidebar_title: Pose Estimation Panel
     sidebar_icon: mdi:server
     module_url: /local/pose-estimation-panel.js
-    config:
-      # Data you want to make available to panel
-      pose_label : sensor.posture_estimation
       
 
 # Add the relay MQTT device
@@ -54,12 +51,12 @@ light:
   - platform: mqtt
     # The topic that will be used to command the device
     schema: json
-    name: "rgb_light"
-    state_topic: "devices/M5-rgb-light"
-    command_topic: "devices/M5-rgb-light/set"
-    brightness: true
-    color_mode: true
-    supported_color_modes: ["rgb"]
+    name: "RGB light"
+    state_topic: "devices/M5-rgb-light/status"
+    command_topic: "devices/M5-rgb-light/switch"
+    brightness_state_topic: 'devices/M5-rgb-light/brightness/status'
+    brightness_command_topic: 'devices/M5-rgb-light/brightness/set'
+    optimistic: false
 
 
 # Add the Jetson Nano
@@ -110,6 +107,5 @@ mqtt:
   broker: 127.0.0.1
 
 group: !include groups.yaml
-automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
