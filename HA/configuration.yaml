@@ -9,13 +9,10 @@ tts:
 panel_custom:
   - name: pose-estimation-panel
     # url_path needs to be unique for each panel_custom config
-    url_path: pose_estimation_panel
+    url_path: pose-estimation-panel
     sidebar_title: Pose Estimation Panel
     sidebar_icon: mdi:server
     module_url: /local/pose-estimation-panel.js
-    config:
-      # Data you want to make available to panel
-      pose_label : sensor.posture_estimation
       
 
 # Add the relay MQTT device
