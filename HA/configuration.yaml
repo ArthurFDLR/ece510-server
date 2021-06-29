@@ -54,12 +54,12 @@ light:
   - platform: mqtt
     # The topic that will be used to command the device
     schema: json
-    name: "rgb_light"
-    state_topic: "devices/M5-rgb-light"
-    command_topic: "devices/M5-rgb-light/set"
-    brightness: true
-    color_mode: true
-    supported_color_modes: ["rgb"]
+    name: "RGB light"
+    state_topic: "devices/M5-rgb-light/status"
+    command_topic: "devices/M5-rgb-light/switch"
+    brightness_state_topic: 'devices/M5-rgb-light/brightness/status'
+    brightness_command_topic: 'devices/M5-rgb-light/brightness/set'
+    optimistic: false
 
 
 # Add the Jetson Nano
@@ -110,6 +110,5 @@ mqtt:
   broker: 127.0.0.1
 
 group: !include groups.yaml
-automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
