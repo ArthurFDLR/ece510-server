@@ -15,7 +15,8 @@ panel_custom:
     module_url: /local/pose-estimation-panel.js
     config:
       # Data you want to make available to panel
-      hello: world
+      pose_label : sensor.posture_estimation
+      
 
 # Add the relay MQTT device
 light:

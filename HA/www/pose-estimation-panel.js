@@ -46,4 +46,4 @@ class ExamplePanel extends LitElement {
     `;
   }
 }
-customElements.define("example-panel", ExamplePanel);
+customElements.define("pose-estimation-panel", ExamplePanel);
