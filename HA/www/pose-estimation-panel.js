@@ -124,8 +124,7 @@ div.title {
       narrow: { type: Boolean },
       route: { type: Object },
       panel: { type: Object },
-      size: {type: Object}, 
-      kpoints : {type: Object}
+      size: {type: Object}
     }
   }
 
@@ -133,85 +132,84 @@ div.title {
     super();
     this.size = vmin(size_pose);
     window.addEventListener('resize', this._handleResize);
-    this.kpoints = this.hass.states.sensor.pose_estimation.Attributes.Keypoints;
   }
 
   render() {
     return html`
      <div class="title">
-        <p> ${this.hass.states.sensor.pose_estimation.PoseLabel} </p>
+        <p> ${this.hass.states["sensor.pose_estimation"].PoseLabel} </p>
      </div>
      <figure class="css-chart">
   <ul class="line-chart">
-        <li style="--y: ${this.kpoints[1][1]*(this.size-6)}px; --x: ${this.kpoints[1][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1][0]*(this.size-6)}px">
            <div class="data-point" data-value="1"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[1],this.kpoints[3]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[1],this.kpoints[3]) * this.size}; --angle: ${calculate_angle(this.kpoints[1],this.kpoints[3])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[3]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[3]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[3])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[16][1]*(this.size-6)}px; --x: ${this.kpoints[16][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[16][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[16][0]*(this.size-6)}px">
            <div class="data-point" data-value="16"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[16],this.kpoints[14]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[16],this.kpoints[14]) * this.size}; --angle: ${calculate_angle(this.kpoints[16],this.kpoints[14])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[16],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[16],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[16],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[14][1]*(this.size-6)}px; --x: ${this.kpoints[14][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14][0]*(this.size-6)}px">
            <div class="data-point" data-value="14"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[14],this.kpoints[12]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[14],this.kpoints[12]) * this.size}; --angle: ${calculate_angle(this.kpoints[14],this.kpoints[12])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[14],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[12][1]*(this.size-6)}px; --x: ${this.kpoints[12][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12][0]*(this.size-6)}px">
            <div class="data-point" data-value="12"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[12],this.kpoints[11]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[12],this.kpoints[11]) * this.size}; --angle: ${calculate_angle(this.kpoints[12],this.kpoints[11])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[11][1]*(this.size-6)}px; --x: ${this.kpoints[11][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11][0]*(this.size-6)}px">
            <div class="data-point" data-value="11"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[11],this.kpoints[13]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[11],this.kpoints[13]) * this.size}; --angle: ${calculate_angle(this.kpoints[11],this.kpoints[13])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[13][1]*(this.size-6)}px; --x: ${this.kpoints[13][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13][0]*(this.size-6)}px">
            <div class="data-point" data-value="13"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[13],this.kpoints[15]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[13],this.kpoints[15]) * this.size}; --angle: ${calculate_angle(this.kpoints[13],this.kpoints[15])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[15]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[15]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[13],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[15])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[10][1]*(this.size-6)}px; --x: ${this.kpoints[10][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[10][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[10][0]*(this.size-6)}px">
            <div class="data-point" data-value="10"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[10],this.kpoints[8]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[10],this.kpoints[8]) * this.size}; --angle: ${calculate_angle(this.kpoints[10],this.kpoints[8])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[10],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[10],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[10],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[8][1]*(this.size-6)}px; --x: ${this.kpoints[8][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8][0]*(this.size-6)}px">
            <div class="data-point" data-value="8"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[8],this.kpoints[6]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[8],this.kpoints[6]) * this.size}; --angle: ${calculate_angle(this.kpoints[8],this.kpoints[6])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[8],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[6][1]*(this.size-6)}px; --x: ${this.kpoints[6][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6][0]*(this.size-6)}px">
            <div class="data-point" data-value="6"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[6],this.kpoints[12]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[6],this.kpoints[12]) * this.size}; --angle: ${calculate_angle(this.kpoints[6],this.kpoints[12])};"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[6],this.kpoints[5]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[6],this.kpoints[5]) * this.size}; --angle: ${calculate_angle(this.kpoints[6],this.kpoints[5])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[12])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[6],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[5][1]*(this.size-6)}px; --x: ${this.kpoints[5][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5][0]*(this.size-6)}px">
            <div class="data-point" data-value="5"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[5],this.kpoints[11]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[5],this.kpoints[11]) * this.size}; --angle: ${calculate_angle(this.kpoints[5],this.kpoints[11])};"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[5],this.kpoints[7]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[5],this.kpoints[7]) * this.size}; --angle: ${calculate_angle(this.kpoints[5],this.kpoints[7])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[11])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[5],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[7][1]*(this.size-6)}px; --x: ${this.kpoints[7][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7][0]*(this.size-6)}px">
            <div class="data-point" data-value="7"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[7],this.kpoints[9]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[7],this.kpoints[9]) * this.size}; --angle: ${calculate_angle(this.kpoints[7],this.kpoints[9])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[9]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[9]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[7],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[9])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[0][1]*(this.size-6)}px; --x: ${this.kpoints[0][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0][0]*(this.size-6)}px">
            <div class="data-point" data-value="0"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[0],this.kpoints[2]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[0],this.kpoints[2]) * this.size}; --angle: ${calculate_angle(this.kpoints[0],this.kpoints[2])};"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[0],this.kpoints[1]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[0],this.kpoints[1]) * this.size}; --angle: ${calculate_angle(this.kpoints[0],this.kpoints[1])};"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[0],this.kpoints[17]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[0],this.kpoints[17]) * this.size}; --angle: ${calculate_angle(this.kpoints[0],this.kpoints[17])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[1])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[17]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[17]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[0],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[17])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[2][1]*(this.size-6)}px; --x: ${this.kpoints[2][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2][0]*(this.size-6)}px">
            <div class="data-point" data-value="2"></div>
-           <div class="line-segment${calculate_angle(this.kpoints[2],this.kpoints[4]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.kpoints[2],this.kpoints[4]) * this.size}; --angle: ${calculate_angle(this.kpoints[2],this.kpoints[4])};"></div>
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[4]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[4]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[2],this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[4])};"></div>
         </li>
-        <li style="--y: ${this.kpoints[17][1]*(this.size-6)}px; --x: ${this.kpoints[17][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[17][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[17][0]*(this.size-6)}px">
            <div class="data-point" data-value="17"></div>
         </li>
-        <li style="--y: ${this.kpoints[3][1]*(this.size-6)}px; --x: ${this.kpoints[3][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[3][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[3][0]*(this.size-6)}px">
            <div class="data-point" data-value="3"></div>
         </li>
-        <li style="--y: ${this.kpoints[4][1]*(this.size-6)}px; --x: ${this.kpoints[4][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[4][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[4][0]*(this.size-6)}px">
            <div class="data-point" data-value="4"></div>
         </li>
-        <li style="--y: ${this.kpoints[9][1]*(this.size-6)}px; --x: ${this.kpoints[9][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[9][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[9][0]*(this.size-6)}px">
            <div class="data-point" data-value="9"></div>
         </li>
-        <li style="--y: ${this.kpoints[15][1]*(this.size-6)}px; --x: ${this.kpoints[15][0]*(this.size-6)}px">
+        <li style="--y: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[15][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.pose_estimation"].Attributes.Keypoints[15][0]*(this.size-6)}px">
            <div class="data-point" data-value="15"></div>
         </li>
         </ul>
@@ -220,4 +218,4 @@ div.title {
   }
 }
 
-customElements.define('pose-estimation-panel', PosePanel);
+customElements.define('pose-panel', PosePanel);
