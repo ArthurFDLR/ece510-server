@@ -1,13 +1,13 @@
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
-default_config:
+#default_config:
 
 # Text to speech
 tts:
   - platform: google_translate
 
 panel_custom:
-  - name: pose-estimation-panel
+  - name: pose-panel
     # url_path needs to be unique for each panel_custom config
     url_path: pose-estimation-panel
     sidebar_title: Pose Estimation Panel
@@ -16,10 +16,10 @@ panel_custom:
       
 
 # Add the relay MQTT device
-light:
+fan:
   - platform: mqtt
     # The topic that will be used to command the device
-    name: "Relay device"
+    name: "Smart fan"
     state_topic: "devices/M5-relay-light/status"
     command_topic: "devices/M5-relay-light/switch"
     qos: 0
@@ -48,16 +48,17 @@ light:
 #   "transition": 2,
 #   "white_value": 150
 # }
-  - platform: mqtt
-    # The topic that will be used to command the device
-    schema: json
-    name: "RGB light"
-    state_topic: "devices/M5-rgb-light/status"
-    command_topic: "devices/M5-rgb-light/switch"
-    brightness_state_topic: 'devices/M5-rgb-light/brightness/status'
-    brightness_command_topic: 'devices/M5-rgb-light/brightness/set'
-    optimistic: false
-
+#  - platform: mqtt
+#    # The topic that will be used to command the device
+#    name: "Led"
+#    state_topic: "devices/M5-rgb-light/status"
+#    command_topic: "devices/M5-rgb-light/switch"
+#    brightness_state_topic: 'devices/M5-rgb-light/brightness/status'
+#    brightness_command_topic: 'devices/M5-rgb-light/brightness/set'
+#    payload_on: "ON"
+#    payload_off: "OFF"
+#    optimistic: false
+    
 
 # Add the Jetson Nano
 # TODO: Define data format
@@ -81,11 +82,11 @@ automation:
   trigger:
     - platform: state
       entity_id: sensor.posture_estimation
-      to: "RaisedHand"
+      to: "Raise right hand"
   action:
-    - service: light.toggle
+    - service: fan.toggle
       target:
-        entity_id: light.relay_device
+        entity_id: fan.smart_fan
       
 
 # This is the configuration of the UI
