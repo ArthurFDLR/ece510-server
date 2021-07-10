@@ -20,12 +20,16 @@ fan:
   - platform: mqtt
     # The topic that will be used to command the device
     name: "Smart fan"
-    state_topic: "devices/M5-relay-light/status"
-    command_topic: "devices/M5-relay-light/switch"
+    state_topic: "devices/M5-relay-fan/status"
+    command_topic: "devices/M5-relay-fan/switch"
     qos: 0
     payload_on: "ON"
     payload_off: "OFF"
-    optimistic: false
+    availability:
+      - topic: "devices/M5-relay-fan/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
 # Add the rgb MQTT light
 # Json format
 # {
