@@ -6,7 +6,8 @@ import {
 
 var size_pose = 60;
 
-var array_lines_figure = [[1, 3], [16, 14], [14, 12], [12, 11],[11, 13], [13, 15],[10, 8], [8, 6], [6, 12], [6, 5], [5, 11],[5, 7],[7, 9],[0, 2],[0, 1],[0, 17],[2, 4]]
+var dict_lines_figure = {1: [3], 16: [14], 14: [12], 12: [11], 11: [13], 13: [15], 10: [8], 8: [6], 6 : [12,5],
+   5 : [11, 7], 7 : [9], 0 : [2, 1, 17], 2: [4], 17 : [], 3 : [], 4 : [], 9 : [], 15 : []}
 
 
 function vh(v) {
@@ -134,6 +135,7 @@ div.title {
   constructor() {
     super();
     this.size = vmin(size_pose);
+    this.display = dict_lines_figure;
     window.addEventListener('resize', this._handleResize);
   }
 
@@ -144,6 +146,24 @@ div.title {
      </div>
      <figure class="css-chart">
   <ul class="line-chart">
+        ${Object.keys(this.display).map(key, index => 
+          
+          html`
+        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]*(this.size-6)}px">
+            ${(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key] != None ) ?  
+            html`<div class="data-point" data-value=${key}></div>`
+            :
+            html`<div></div>`}
+           ${index.map(item => 
+            (this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key] != None && this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item] != None) ?
+            html`
+           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item])};"></div>
+           ` : 
+           html`<div></div>`
+           )}
+        </li>`
+        )}
+        <!--
         <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1][0]*(this.size-6)}px">
            <div class="data-point" data-value="1"></div>
            <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3])};"></div>
@@ -216,6 +236,7 @@ div.title {
            <div class="data-point" data-value="15"></div>
         </li>
         </ul>
+        -->
   
 </figure>`;
   }
