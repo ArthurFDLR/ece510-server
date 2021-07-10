@@ -118,6 +118,20 @@ div.title {
   transform: rotate(calc(var(--angle) * 1deg));
   transform-origin: left bottom;
 }
+
+.info-box {
+  bottom: calc(var(--x) + 15px);
+  left: calc(var(--x) + 15px);
+  font-size: 3vmin;
+  font-family: Arial, Helvetica, sans-serif;
+  display: none;
+}
+
+.data-point:hover + .info-box {
+  display: block;
+}
+
+
         `;
 
   }
@@ -151,7 +165,10 @@ div.title {
           html`
         <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]*(this.size-6)}px">
             ${(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key] != None ) ?  
-            html`<div class="data-point" data-value=${key}></div>`
+            html`<div class="data-point" data-value=${key}></div>
+                <div class="info-box">
+                <p> ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]} </p>
+                </div>`
             :
             html`<div></div>`}
            ${index.map(item => 
