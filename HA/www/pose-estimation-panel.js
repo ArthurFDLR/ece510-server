@@ -6,6 +6,9 @@ import {
 
 var size_pose = 60;
 
+var array_lines_figure = [[1, 3], [16, 14], [14, 12], [12, 11],[11, 13], [13, 15],[10, 8], [8, 6], [6, 12], [6, 5], [5, 11],[5, 7],[7, 9],[0, 2],[0, 1],[0, 17],[2, 4]]
+
+
 function vh(v) {
   var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
   return (v * h) / 100;
