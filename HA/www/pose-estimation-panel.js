@@ -174,7 +174,7 @@ div.title {
         <li style="--y: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1])*(this.size-6)}px; --x: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0])*(this.size-6)}px">
             ${(change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]) != 0.5) ?  
             html`<div class="data-point" data-value=${key}></div>
-                <div class="info-box">
+                <div class="info-box" style="--y: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1])*(this.size-6)}px; --x: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0])*(this.size-6)}px">
                 <p>${key}</p>
                 </div>`
             :
