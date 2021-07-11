@@ -47,6 +47,14 @@ function calculate_angle(p1, p2) {
   }
 }
 
+function change_referential(x) {
+   return (x+1)*0.5;
+}
+
+function change_referential_keypoint(keypoint) {
+    return [change_referential(keypoint[0]), change_referential(keypoint[1])];
+}
+
 class PosePanel extends LitElement {
   _handleResize = () => {this.size = vmin(size_pose)}
   static get styles() {
@@ -120,9 +128,9 @@ div.title {
 }
 
 .info-box {
-  bottom: calc(var(--x) + 15px);
+  bottom: calc(var(--y) + 15px);
   left: calc(var(--x) + 15px);
-  font-size: 3vmin;
+  font-size: 2vmin;
   font-family: Arial, Helvetica, sans-serif;
   display: none;
 }
@@ -160,21 +168,21 @@ div.title {
      </div>
      <figure class="css-chart">
   <ul class="line-chart">
-        ${Object.keys(this.display).map(key, index => 
+        ${Object.keys(this.display).map((key, index) => 
           
           html`
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]*(this.size-6)}px">
-            ${(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key] != None ) ?  
+        <li style="--y: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1])*(this.size-6)}px; --x: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0])*(this.size-6)}px">
+            ${(change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]) != 0.5) ?  
             html`<div class="data-point" data-value=${key}></div>
                 <div class="info-box">
-                <p> ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]} </p>
+                <p>${key}</p>
                 </div>`
             :
             html`<div></div>`}
-           ${index.map(item => 
-            (this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key] != None && this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item] != None) ?
+           ${this.display[key].map(item => 
+            (change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]) != 0.5 && change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item][0]) != 0.5) ?
             html`
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item])};"></div>
+           <div class="line-segment${calculate_angle(change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]),change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item])) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]),change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item])) * this.size}; --angle: ${calculate_angle(change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]),change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item]))};"></div>
            ` : 
            html`<div></div>`
            )}
