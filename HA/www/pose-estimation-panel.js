@@ -162,106 +162,36 @@ div.title {
   }
 
   render() {
+    var pose = this.hass.states["sensor.posture_estimation"].state;
+    var keypoints = this.hass.states["sensor.posture_estimation"].attributes.Keypoints;
     return html`
      <div class="title">
-        <p> ${this.hass.states["sensor.posture_estimation"].state} </p>
+        <p> ${pose} </p>
      </div>
      <figure class="css-chart">
   <ul class="line-chart">
         ${Object.keys(this.display).map((key, index) => 
           
           html`
-        <li style="--y: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1])*(this.size-6)}px; --x: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0])*(this.size-6)}px">
-            ${(change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]) != 0.5) ?  
+        <li style="--y: ${change_referential(keypoints[key][1])*(this.size-6)}px; --x: ${change_referential(keypoints[key][0])*(this.size-6)}px">
+            ${(change_referential(keypoints[key][0]) != 0.5) ?  
             html`<div class="data-point" data-value=${key}></div>
-                <div class="info-box" style="--y: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][1])*(this.size-6)}px; --x: ${change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0])*(this.size-6)}px">
+                <div class="info-box" style="--y: ${change_referential(keypoints[key][1])*(this.size-6)}px; --x: ${change_referential(keypoints[key][0])*(this.size-6)}px">
                 <p>${key}</p>
                 </div>`
             :
             html`<div></div>`}
            ${this.display[key].map(item => 
-            (change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key][0]) != 0.5 && change_referential(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item][0]) != 0.5) ?
+            (change_referential(keypoints[key][0]) != 0.5 && change_referential(keypoints[item][0]) != 0.5) ?
             html`
-           <div class="line-segment${calculate_angle(change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]),change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item])) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]),change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item])) * this.size}; --angle: ${calculate_angle(change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[key]),change_referential_keypoint(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[item]))};"></div>
+           <div class="line-segment${calculate_angle(change_referential_keypoint(keypoints[key]),change_referential_keypoint(keypoints[item])) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(change_referential_keypoint(keypoints[key]),change_referential_keypoint(keypoints[item])) * this.size}; --angle: ${calculate_angle(change_referential_keypoint(keypoints[key]),change_referential_keypoint(keypoints[item]))};"></div>
            ` : 
            html`<div></div>`
            )}
         </li>`
         )}
-        <!--
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1][0]*(this.size-6)}px">
-           <div class="data-point" data-value="1"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[16][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[16][0]*(this.size-6)}px">
-           <div class="data-point" data-value="16"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[16],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[16],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[16],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14][0]*(this.size-6)}px">
-           <div class="data-point" data-value="14"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[14],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12][0]*(this.size-6)}px">
-           <div class="data-point" data-value="12"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11][0]*(this.size-6)}px">
-           <div class="data-point" data-value="11"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13][0]*(this.size-6)}px">
-           <div class="data-point" data-value="13"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[15]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[15]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[13],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[15])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[10][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[10][0]*(this.size-6)}px">
-           <div class="data-point" data-value="10"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[10],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[10],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[10],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8][0]*(this.size-6)}px">
-           <div class="data-point" data-value="8"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[8],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6][0]*(this.size-6)}px">
-           <div class="data-point" data-value="6"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[12])};"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[6],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5][0]*(this.size-6)}px">
-           <div class="data-point" data-value="5"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[11])};"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[5],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7][0]*(this.size-6)}px">
-           <div class="data-point" data-value="7"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[9]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[9]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[7],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[9])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0][0]*(this.size-6)}px">
-           <div class="data-point" data-value="0"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2])};"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[1])};"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[17]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[17]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[0],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[17])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2][0]*(this.size-6)}px">
-           <div class="data-point" data-value="2"></div>
-           <div class="line-segment${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[4]) > 0 ? 1 : 2}" style="--hypotenuse: ${calculate_hypotenuse(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[4]) * this.size}; --angle: ${calculate_angle(this.hass.states["sensor.posture_estimation"].attributes.Keypoints[2],this.hass.states["sensor.posture_estimation"].attributes.Keypoints[4])};"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[17][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[17][0]*(this.size-6)}px">
-           <div class="data-point" data-value="17"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[3][0]*(this.size-6)}px">
-           <div class="data-point" data-value="3"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[4][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[4][0]*(this.size-6)}px">
-           <div class="data-point" data-value="4"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[9][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[9][0]*(this.size-6)}px">
-           <div class="data-point" data-value="9"></div>
-        </li>
-        <li style="--y: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[15][1]*(this.size-6)}px; --x: ${this.hass.states["sensor.posture_estimation"].attributes.Keypoints[15][0]*(this.size-6)}px">
-           <div class="data-point" data-value="15"></div>
-        </li>
         </ul>
-        -->
+      
   
 </figure>`;
   }
